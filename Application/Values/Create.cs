@@ -5,13 +5,13 @@ using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Values
+namespace Application.Contacts
 {
     public class Create
     {
         public class Command : IRequest
         {
-            public int id { get; set; }
+            public Guid Id { get; set; }
             public string firstName { get; set; }
             public string surname { get; set; }
             public string phoneNumbers { get; set; }
@@ -27,15 +27,15 @@ namespace Application.Values
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var newValue = new Value
+                var newValue = new Contact
                 {
-                    id = request.id,
+                    Id = request.Id,
                     firstName = request.firstName,
                     surname = request.surname,
                     phoneNumbers = request.phoneNumbers,
                 };
 
-                context.Values.Add(newValue);
+                context.Contacts.Add(newValue);
                 var success = await context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;
@@ -43,6 +43,5 @@ namespace Application.Values
                 throw new Exception("Problem saving changes");
             }
         }
-
     }
 }

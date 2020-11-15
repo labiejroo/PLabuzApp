@@ -1,19 +1,17 @@
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Persistence;
 
-namespace Application.Values
+namespace Application.Contacts
 {
     public class List
     {
-        public class Query : IRequest<List<Value>> { }
-        public class Handler : IRequestHandler<Query, List<Value>>
+        public class Query : IRequest<List<Contact>> { }
+        public class Handler : IRequestHandler<Query, List<Contact>>
         {
             private readonly DataContext context;
             public Handler(DataContext context)
@@ -21,9 +19,9 @@ namespace Application.Values
                 this.context = context;
             }
 
-            public async Task<List<Value>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<Contact>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var valuesList = await context.Values.ToListAsync();
+                var valuesList = await context.Contacts.ToListAsync();
                 return valuesList;
             }
         }
@@ -53,4 +51,4 @@ namespace Application.Values
 //     logger.LogInformation("Task was canceled");
 // }
 
-// var activities = await context.Activities.ToListAsync(cancellationToken);
+// var values = await context.Value.ToListAsync(cancellationToken);

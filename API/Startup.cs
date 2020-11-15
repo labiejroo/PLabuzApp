@@ -1,4 +1,4 @@
-using Application.Values;
+using Application.Contacts;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

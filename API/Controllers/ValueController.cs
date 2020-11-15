@@ -1,7 +1,8 @@
-using Application.Values;
+using Application.Contacts;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,24 +10,24 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ContactsController : ControllerBase
     {
         private readonly IMediator mediator;
-        public ValuesController(IMediator mediator)
+        public ContactsController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Value>>> List()
+        public async Task<ActionResult<List<Contact>>> List()
         {
             return await mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Value>> Details(int id)
+        public async Task<ActionResult<Contact>> Details(Guid id)
         {
-            return await mediator.Send(new Details.Query { id = id });
+            return await mediator.Send(new Details.Query { Id = id });
         }
 
         [HttpPost]
@@ -36,16 +37,16 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Unit>> Edit(int id, Edit.Command command)
+        public async Task<ActionResult<Unit>> Edit(Guid id, Edit.Command command)
         {
-            command.id = id;
+            command.Id = id;
             return await mediator.Send(command);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Unit>> Delete(int id)
+        public async Task<ActionResult<Unit>> Delete(Guid id)
         {
-            return await mediator.Send(new Delete.Command { id = id });
+            return await mediator.Send(new Delete.Command { Id = id });
         }
 
     }

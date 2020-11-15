@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using MediatR;
 using Persistence;
 
-namespace Application.Values
+namespace Application.Contacts
 {
     public class Delete
     {
         public class Command : IRequest
         {
-            public int id { get; set; }
+            public Guid Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -24,7 +24,7 @@ namespace Application.Values
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 //handle logic here
-                var valueToDelete = await context.Values.FindAsync(request.id);
+                var valueToDelete = await context.Contacts.FindAsync(request.Id);
 
                 if (valueToDelete == null)
                     throw new Exception("Could not find");

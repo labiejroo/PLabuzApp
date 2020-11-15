@@ -5,16 +5,16 @@ using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Values
+namespace Application.Contacts
 {
     public class Details
     {
-        public class Query : IRequest<Value>
+        public class Query : IRequest<Contact>
         {
-            public int Id { get; set; }
+            public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Value>
+        public class Handler : IRequestHandler<Query, Contact>
         {
             private readonly DataContext context;
             public Handler(DataContext context)
@@ -22,11 +22,10 @@ namespace Application.Values
                 this.context = context;
             }
 
-            public async Task<Value> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Contact> Handle(Query request, CancellationToken cancellationToken)
             {
-                var activity = await context.Values.FindAsync(request.Id);
-
-                return activity;
+                var valueDetail = await context.Contacts.FindAsync(request.Id);
+                return valueDetail;
             }
         }
     }

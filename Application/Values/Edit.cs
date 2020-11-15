@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using MediatR;
 using Persistence;
 
-namespace Application.Values
+namespace Application.Contacts
 {
     public class Edit
     {
         public class Command : IRequest
         {
-            public int id { get; set; }
+            public Guid Id { get; set; }
             public string firstName { get; set; }
             public string surname { get; set; }
             public string phoneNumbers { get; set; }
@@ -26,10 +26,10 @@ namespace Application.Values
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 //handle logic here
-                var editValue = await context.Values.FindAsync(request.id);
+                var editValue = await context.Contacts.FindAsync(request.Id);
 
                 if (editValue == null)
-                    throw new Exception("Could not find activity");
+                    throw new Exception("Could not find contact");
 
                 editValue.firstName = request.firstName ?? editValue.firstName;
                 editValue.surname = request.surname ?? editValue.surname;
