@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from "react";
-import { Item, Image, Segment, Button, Label } from "semantic-ui-react";
+import { Item, Segment, Button, Label } from "semantic-ui-react";
 import { IContact } from "../../../app/models/contact";
 
 interface IProps {
@@ -22,18 +22,13 @@ export const ContactList: React.FC<IProps> = ({
   return (
     <Segment clearing>
       <Item.Group divided>
-        {contacts.map((contact, index: any) => {
+        {contacts.map((contact, index: number) => {
           return (
             <Item key={contact.id}>
-              {/* <Item.Image size="tiny" src="/images/wireframe/image.png" /> */}
-
               <Item.Content>
                 <Item.Header as="a">{contact.firstName}</Item.Header>
                 <Item.Meta>{contact.surname}</Item.Meta>
-                <Item.Description>
-                  <div>{contact.firstName}</div>
-                  <div>{contact.surname}</div>
-                </Item.Description>
+
                 <Item.Extra>
                   <Button
                     onClick={() => selectContact(contact.id)}

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
 import { Segment, FormInput, Form, Button } from "semantic-ui-react";
 import { IContact } from "../../../app/models/contact";
 import { identifier } from "@babel/types";
@@ -32,6 +32,12 @@ export const ContactForm: React.FC<IProps> = ({
     }
   };
   const [contact, setContact] = useState<IContact>(InitialiseForm);
+  const [phoneNumbersList, setPhoneNumbersList] = useState<string[]>([]);
+
+  useEffect(() => {
+    const phoneNums: string[] = contact.phoneNumbers.split(",");
+    setPhoneNumbersList(phoneNums);
+  }, []);
 
   const handleSubmmit = () => {
     if (contact.id.length === 0) {
@@ -56,28 +62,70 @@ export const ContactForm: React.FC<IProps> = ({
     setContact({ ...contact, [name]: value });
   };
 
+  const handleInputChangeForPhoneNumbers = (
+    event: FormEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    //console.log(event.target.value);
+    console.log(event.currentTarget);
+
+    const { name, value } = event.currentTarget;
+
+    let items = [...phoneNumbersList];
+    let index = parseInt(name);
+    items[index] = value;
+
+    setPhoneNumbersList(items);
+    let mergedValues = "";
+    for (var i = 0; i < items.length; i++) {
+      mergedValues += items[i];
+      if (i !== items.length - 1) mergedValues += ",";
+    }
+
+    setContact({ ...contact, phoneNumbers: mergedValues });
+  };
+
+  const addNewPhoneNumber = () => {
+    let newElement = "new Number";
+    setPhoneNumbersList([...phoneNumbersList, newElement]);
+  };
+
   return (
     <Segment clearing>
       <Form onSubmit={handleSubmmit}>
         <Form.Input
           onChange={handleInputChange}
-          name="title"
-          placholder="Title"
+          name="firstName"
+          placholder="First Name"
           value={contact.firstName}
         />
-        <Form.TextArea
-          onChange={handleInputChange}
-          name="description"
-          rows={2}
-          placholder="Desc"
-          value={contact.surname}
-        />
+
         <Form.Input
           onChange={handleInputChange}
-          name="category"
-          placholder="Category"
-          value={contact.phoneNumbers}
+          name="surname"
+          placholder="Surname"
+          value={contact.surname}
         />
+
+        {phoneNumbersList.map((item, index) => {
+          return (
+            <Form.TextArea
+              onChange={handleInputChangeForPhoneNumbers}
+              key={index}
+              name={`${index}`}
+              placholder="Phone Number"
+              value={item}
+            />
+          );
+        })}
+
+        <Button
+          onClick={() => addNewPhoneNumber()}
+          floated="left"
+          negative
+          type="button"
+          content="+"
+        />
+
         <Button
           loading={submitting}
           floated="right"

@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from "react";
-import { Grid, List } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { IContact } from "../../../app/models/contact";
 import { ContactList } from "./ContactList";
 import { ContactDetails } from "../contactdetails/ContactDetails";

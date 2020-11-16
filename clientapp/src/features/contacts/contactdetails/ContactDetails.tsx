@@ -14,13 +14,11 @@ export const ContactDetails: React.FC<IProps> = ({
 }) => {
   return (
     <Card>
-      <Image src="/images/avatar/large/matthew.png" wrapped ui={false} />
       <Card.Content>
         <Card.Header>{contact.firstName}</Card.Header>
         <Card.Meta>
           <span className="date">{contact.surname}</span>
         </Card.Meta>
-        <Card.Description>{contact.firstName}</Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths={2}>

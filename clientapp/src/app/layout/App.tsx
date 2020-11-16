@@ -1,8 +1,7 @@
 //import React from "react";
 import React, { useState, useEffect, SyntheticEvent } from "react";
-import logo from "./logo.svg";
 import "../../App.css";
-import { List, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { IContact } from "../models/contact";
 import { Navbar } from "../../features/nav/Navbar";
 import { ContactDashboard } from "../../features/contacts/dashboard/ContactDashboard";
